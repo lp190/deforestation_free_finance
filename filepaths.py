@@ -9,7 +9,7 @@ from pathlib import Path
 # All relative file paths are defined here:
 
 # Define the base path
-PATH_TO_REPO = Path('/Users/tychotax/PycharmProjects/deforestation_open_source')
+PATH_TO_REPO = Path('')
 
 import sys
 
