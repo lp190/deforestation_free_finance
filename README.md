@@ -28,7 +28,7 @@ Instructions on how to install and set up your project.
 
 ```bash
 # Example for setting up the environment (we strongly recommend you to first create a dedicated venv)
-git clone [https://github.com/yourusername/yourrepository.git](https://github.com/ClimateAndCompany/deforestation_free_finance.git)
+git clone https://github.com/ClimateAndCompany/deforestation_free_finance.git
 cd deforestation_free_finance
 pip install . 
 ```
