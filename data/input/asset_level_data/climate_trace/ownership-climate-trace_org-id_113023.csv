@@ -1,0 +1,9 @@
+org_id,code,name,data,created_date,modified_date
+1,XI-LEI,Global Legal Entity Identifier Index,,,
+2,XI-PID,PermID: Refinitiv Permanent Identifier,,,
+3,GB-COH,UK Companies House,,,
+4,CN-USCI,Unified Social Credit Identifier,,,
+5,CN-SAIC,State Administration for Industry and Commerce (SAIC),,,
+6,US-EIA,US-EIA,,,
+7,SPCIQ,S&P Capital IQ,,,
+8,XI-MIC,Market Identifier Codes (MIC) ISO 10383 Codes for exchanges and market identification,Exchange Code:Ticker,,
