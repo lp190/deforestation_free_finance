@@ -1,4 +1,4 @@
-aiohttp==3.8.1
+aiohttp==3.9.5
 aiohttp_socks==0.7.1
 async_timeout==4.0.2
 beautifulsoup4==4.12.3
@@ -9,10 +9,9 @@ geopandas==0.14.3
 geopy==2.2.0
 googlemaps==4.10.0
 googletransx==2.4.2
-numpy==1.23.1
-pandas==1.4.3
+pandas==2.2.2
 pycountry==24.6.1
-pymrio==0.4.8
+pymrio==0.5.4
 rapidfuzz==3.6.1
 requests==2.32.3
 schedule==1.1.0

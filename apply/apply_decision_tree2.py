@@ -135,7 +135,10 @@ def apply_dt2_policy_risk(df_portfolio,
         # Check if the 'output_final_dt1.csv' file exists
 
         if PATH_TO_DT1.exists():
-            dt1_output = pd.read_excel(PATH_TO_DT1).astype({'identifier': 'str'})
+            dt1_output = pd.read_excel(PATH_TO_DT1,
+                                       usecols=['company_name', 'identifier', 'country_name', 'country_iso',
+                                                'nace_code', 'nace_desc', 'dt1_bucket']
+                                       ).astype({'identifier': 'str'})
         else:
             raise ValueError('DT1 not found, please run the run_decision_tree1.py script first')
 
@@ -170,6 +173,8 @@ def apply_dt2_policy_risk(df_portfolio,
         # Step 0 - Based on DT1 bucket
         # If the deforestation exposure is modelled as low, then the policy risk is assumed to be low as well
         df_policy_risk.loc[df_policy_risk['dt1_bucket'] == 'low', 'dt2_bucket'] = 'low'
+        # Drop dt1_bucket
+        df_policy_risk = df_policy_risk.drop('dt1_bucket', axis=1)
 
         # Step 1 - Based on total score by Forest500
         df_policy_risk.loc[
@@ -411,10 +416,7 @@ def apply_dt2_policy_risk(df_portfolio,
         # Export to csv
         df_policy_risk.to_csv(os.path.join(PATH_TO_OUTPUT_FOLDER, 'internal_data/dt2_policy_risk.csv'), index=False)
 
-    # Merge the DT2 evaluation with the input dataframe
-    df_portfolio = pd.merge(df_portfolio, df_policy_risk, left_on=['identifier'], right_on=['identifier'], how='left')
-
-    return df_portfolio
+    return df_policy_risk
 
 
 ### SCORING FUNCTION
@@ -525,11 +527,13 @@ def apply_dt2_weighted_average_approach(portfolio_results_dt2,
     # Now do the quantiles
     cutoff_high = portfolio_results_dt2_scores['dt2_score'].quantile(cutoffs[0])
     cutoff_medium = portfolio_results_dt2_scores['dt2_score'].quantile(cutoffs[1])
+    if cutoff_medium == 0:
+        cutoff_medium = np.mean(portfolio_results_dt2_scores['dt2_score'])
 
-    portfolio_results_dt2_scores['dt2_weighted_average'] = 'low'
+    portfolio_results_dt2_scores['dt2_bucket_based_on_score'] = 'low'
     portfolio_results_dt2_scores.loc[
-        portfolio_results_dt2_scores['dt2_score'] >= cutoff_medium, 'dt2_weighted_average'] = 'medium'
+        portfolio_results_dt2_scores['dt2_score'] >= cutoff_medium, 'dt2_bucket_based_on_score'] = 'medium'
     portfolio_results_dt2_scores.loc[
-        portfolio_results_dt2_scores['dt2_score'] >= cutoff_high, 'dt2_weighted_average'] = 'high'
+        portfolio_results_dt2_scores['dt2_score'] >= cutoff_high, 'dt2_bucket_based_on_score'] = 'high'
 
-    return portfolio_results_dt2_scores[['identifier', 'dt2_score', 'dt2_weighted_average']]
+    return portfolio_results_dt2_scores[['identifier', 'dt2_score', 'dt2_bucket_based_on_score']]

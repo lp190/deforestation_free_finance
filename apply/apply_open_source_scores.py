@@ -15,6 +15,7 @@ NOTES:
 
 # import packages
 import pandas as pd
+import numpy as np
 
 # import paths and functions
 from filepaths import PATH_TO_SPOTT_PALM_OIL_QUESTIONS, \
@@ -94,7 +95,7 @@ def apply_open_source_scores(df_portfolio,
                          df_dat['company_name']], ignore_index=True)
 
     # Delete duplicates and print number of deleted rows
-    print('Number of duplicates: ' + str(df_base.duplicated().sum()))
+    print('Number of duplicate company names collected from open-source datasets: ' + str(df_base.duplicated().sum()))
     df_base = df_base.drop_duplicates().to_frame()
 
     # Function to merge datasets based on different identifiers
@@ -300,6 +301,10 @@ def apply_open_source_scores(df_portfolio,
 
     # Only keep those with matched identifiers
     merged_df_final = merged_df_final[merged_df_final['identifier'].notna()]
+
+    # Combine rows with the same identifier
+    merged_df_final = merged_df_final.groupby('identifier').agg(
+        lambda x: x.dropna().iloc[0] if not x.dropna().empty else np.nan).reset_index()
 
     # Convert all columns except 'identifier' to integer
     # Columns to exclude
