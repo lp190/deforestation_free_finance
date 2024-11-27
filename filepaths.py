@@ -8,8 +8,8 @@ from pathlib import Path
 
 # All relative file paths are defined here:
 
-# Define the base path
-PATH_TO_REPO = Path('/Users/lokeshpandey/Library/CloudStorage/OneDrive-stud.uni-goettingen.de/Clim_Com')
+# Define the base path -- base path changed by LP 27.11.2024
+PATH_TO_REPO = Path(__file__).parent
 
 import sys
 

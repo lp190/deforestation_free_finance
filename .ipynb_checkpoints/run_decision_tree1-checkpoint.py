@@ -36,7 +36,6 @@ from apply.apply_forest_and_finance import apply_forest_and_finance
 from apply.apply_number_of_pairs import apply_number_of_pairs
 from apply.apply_sectoral_filter_nace import apply_sectoral_filters_nace
 from apply.apply_supply_chain_filter import apply_supply_chain_filter
-
 # Import functions from other scripts
 from filepaths import PATH_TO_PORTFOLIO_DATA, PATH_TO_COMPANY_SPECIFIC_ASSET_LEVEL_DATA, PATH_TO_OUTPUT_FOLDER, \
     PATH_TO_INPUT_FOLDER
